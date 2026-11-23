@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examen Interactivo | Cultura Digital I (40 Preguntas)</title>
+
+  <!-- Fuente Inter desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Configuración de Tailwind para tipografía Inter y soporte de modo oscuro -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          keyframes: {
+            fadeSlide: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+          animation: {
+            fadeSlide: 'fadeSlide 0.35s ease-out forwards',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Tone.js para efectos de sonido sutiles y opcionales (sin URLs externas de audio) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+</head>
+
+<body class="font-sans antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen overflow-x-hidden transition-colors duration-300 selection:bg-indigo-500 selection:text-white">
+
+  <!-- Fondo decorativo ambiental con gradientes difuminados -->
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -left-32 w-96 h-96 rounded-full bg-sky-500/15 dark:bg-sky-500/10 blur-3xl"></div>
+    <div class="absolute top-1/3 -right-32 w-96 h-96 rounded-full bg-violet-500/15 dark:bg-violet-500/10 blur-3xl"></div>
+    <div class="absolute -bottom-32 left-1/3 w-96 h-96 rounded-full bg-emerald-500/15 dark:bg-emerald-500/10 blur-3xl"></div>
+  </div>
+
+  <!-- Barra de navegación superior -->
+  <header class="sticky top-0 z-30 backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/80 dark:border-slate-800/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <!-- Logotipo e identidad -->
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 via-violet-600 to-sky-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 shrink-0">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="truncate">
+          <h1 class="text-sm sm:text-base font-extrabold tracking-tight truncate">Cultura Digital I</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400 truncate">Examen Interactivo • Etapas 1 a 4</p>
+        </div>
+      </div>
+
+      <!-- Controles globales: Sonido y Tema Claro/Oscuro -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Botón de audio -->
+        <button id="btn-sound" type="button" title="Activar o silenciar sonidos" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <svg id="icon-sound-on" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+          </svg>
+          <svg id="icon-sound-off" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+          </svg>
+        </button>
+
+        <!-- Botón de cambio de tema -->
+        <button id="btn-theme" type="button" title="Cambiar tema claro/oscuro" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <!-- Sol (visible en modo oscuro) -->
+          <svg id="icon-sun" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <!-- Luna (visible en modo claro) -->
+          <svg id="icon-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <!-- Botón volver al inicio (visible durante examen o resultados) -->
+        <button id="btn-home" type="button" class="hidden px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200">
+          Inicio
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+
+    <!-- ========================================================= -->
+    <!-- PANTALLA 1: BIENVENIDA Y CONFIGURACIÓN DEL EXAMEN         -->
+    <!-- ========================================================= -->
+    <section id="screen-start" class="space-y-8 animate-fadeSlide">
+      <!-- Encabezado principal -->
+      <div class="relative overflow-hidden rounded-3xl bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-10 shadow-xl shadow-slate-900/5 dark:shadow-black/30">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div class="space-y-3 max-w-2xl">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+              <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+              Banco completo de 40 reactivos
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              Pon a prueba tu dominio en <span class="bg-gradient-to-r from-sky-500 via-violet-500 to-emerald-500 bg-clip-text text-transparent">Cultura Digital I</span>
+            </h2>
+            <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+              Prepárate con el examen visual interactivo basado en las cuatro etapas del curso. Elige entre practicar con retroalimentación inmediata o realizar un simulacro completo con calificación y análisis por etapa.
+            </p>
+          </div>
+
+          <!-- Estadística rápida -->
+          <div class="grid grid-cols-2 gap-3 shrink-0">
+            <div class="rounded-2xl bg-slate-100/80 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/60 p-4 text-center">
+              <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">40</div>
+              <div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Preguntas</div>
+            </div>
+            <div class="rounded-2xl bg-slate-100/80 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/60 p-4 text-center">
+              <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">4</div>
+              <div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Etapas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjetas visuales de las 4 Etapas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mt-8">
+          <div class="rounded-2xl p-4 bg-sky-500/5 dark:bg-sky-500/10 border border-sky-500/20 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0 font-bold text-sm">E1</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white">Etapa 1</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Ciudadanía e identidad digital</p>
+              <span class="inline-block text-[11px] font-semibold text-sky-600 dark:text-sky-400 mt-1.5">10 reactivos</span>
+            </div>
+          </div>
+
+          <div class="rounded-2xl p-4 bg-violet-500/5 dark:bg-violet-500/10 border border-violet-500/20 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-xl bg-violet-500/15 text-violet-600 dark:text-violet-400 flex items-center justify-center shrink-0 font-bold text-sm">E2</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white">Etapa 2</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Pensamiento crítico y uso ético</p>
+              <span class="inline-block text-[11px] font-semibold text-violet-600 dark:text-violet-400 mt-1.5">10 reactivos</span>
+            </div>
+          </div>
+
+          <div class="rounded-2xl p-4 bg-fuchsia-500/5 dark:bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-xl bg-fuchsia-500/15 text-fuchsia-600 dark:text-fuchsia-400 flex items-center justify-center shrink-0 font-bold text-sm">E3</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white">Etapa 3</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Inteligencia Artificial emergente</p>
+              <span class="inline-block text-[11px] font-semibold text-fuchsia-600 dark:text-fuchsia-400 mt-1.5">10 reactivos</span>
+            </div>
+          </div>
+
+          <div class="rounded-2xl p-4 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 font-bold text-sm">E4</div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white">Etapa 4</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">Aprendizaje y productividad</p>
+              <span class="inline-block text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 mt-1.5">10 reactivos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de configuración antes de comenzar -->
+      <div class="rounded-3xl bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-xl shadow-slate-900/5 dark:shadow-black/30 space-y-6">
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+          Configura tu sesión
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Nombre del estudiante (opcional) -->
+          <div class="space-y-2">
+            <label for="input-student-name" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Nombre del estudiante <span class="text-xs font-normal text-slate-400">(opcional)</span>
+            </label>
+            <input id="input-student-name" type="text" maxlength="60" placeholder="Ej. Sofía Martínez" class="w-full px-4 py-3 rounded-xl bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" />
+          </div>
+
+          <!-- Selección de etapas -->
+          <div class="space-y-2">
+            <label for="select-stage" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Contenido a evaluar
+            </label>
+            <select id="select-stage" class="w-full px-4 py-3 rounded-xl bg-slate-100/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+              <option value="all">Examen completo (40 preguntas — Etapas 1 a 4)</option>
+              <option value="1">Solo Etapa 1: Ciudadanía e identidad digital (10 preguntas)</option>
+              <option value="2">Solo Etapa 2: Pensamiento crítico y uso ético (10 preguntas)</option>
+              <option value="3">Solo Etapa 3: Inteligencia Artificial (10 preguntas)</option>
+              <option value="4">Solo Etapa 4: Aprendizaje y productividad (10 preguntas)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Selector visual de Modo de Evaluación -->
+        <div class="space-y-2.5">
+          <span class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Modalidad</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <button type="button" data-mode="practice" class="mode-card text-left p-4 rounded-2xl border-2 border-indigo-500 bg-indigo-500/10 transition-all duration-200 focus:outline-none">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-sm text-indigo-700 dark:text-indigo-300">Modo Práctica Guiada</span>
+                <span class="w-5 h-5 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xs mode-check">✓</span>
+              </div>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed">
+                Descubre al instante si acertaste con explicación conceptual en cada reactivo. Ideal para estudiar.
+              </p>
+            </button>
+
+            <button type="button" data-mode="exam" class="mode-card text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-100/50 dark:bg-slate-800/50 hover:border-indigo-400 transition-all duration-200 focus:outline-none">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-sm text-slate-800 dark:text-slate-200">Modo Simulacro Real</span>
+                <span class="w-5 h-5 rounded-full border-2 border-slate-300 dark:border-slate-600 text-transparent flex items-center justify-center text-xs mode-check">✓</span>
+              </div>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-relaxed">
+                Navega libremente entre preguntas, marca dudas y revisa tu calificación y respuestas al finalizar.
+              </p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Opciones adicionales (Orden aleatorio) y botón Iniciar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3 border-t border-slate-200 dark:border-slate-800">
+          <label class="inline-flex items-center gap-3 cursor-pointer select-none">
+            <input id="chk-shuffle" type="checkbox" class="w-5 h-5 rounded-md accent-indigo-600 cursor-pointer" />
+            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Mezclar el orden de las preguntas</span>
+          </label>
+
+          <button id="btn-start-exam" type="button" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl font-bold text-sm sm:text-base text-white bg-gradient-to-r from-indigo-600 via-violet-600 to-sky-600 hover:from-indigo-500 hover:via-violet-500 hover:to-sky-500 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 active:scale-[0.98] transition-all duration-200">
+            <span>Comenzar Examen</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PANTALLA 2: INTERFAZ ACTIVA DEL EXAMEN                    -->
+    <!-- ========================================================= -->
+    <section id="screen-quiz" class="hidden space-y-5 animate-fadeSlide">
+      <!-- Barra superior de estado del examen -->
+      <div class="rounded-2xl bg-white/90 dark:bg-slate-900/85 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 p-4 shadow-md">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <!-- Indicador de etapa y número de pregunta -->
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <span id="quiz-stage-badge" class="px-3 py-1 rounded-full text-xs font-bold border">Etapa 1</span>
+            <span id="quiz-progress-text" class="text-sm font-bold text-slate-700 dark:text-slate-200">Pregunta 1 de 40</span>
+          </div>
+
+          <!-- Contadores, temporizador y botón de mapa -->
+          <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <!-- Aciertos o contestadas -->
+            <div id="quiz-score-pill" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span id="quiz-score-label">Aciertos: 0</span>
+            </div>
+
+            <!-- Cronómetro -->
+            <div class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 tabular-nums">
+              <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span id="quiz-timer">00:00</span>
+            </div>
+
+            <!-- Botón abrir mapa de preguntas -->
+            <button id="btn-open-map" type="button" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 text-xs font-bold flex items-center gap-1.5 transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+              <span>Mapa</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de progreso visual -->
+        <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mt-3.5">
+          <div id="quiz-progress-bar" class="h-full rounded-full bg-gradient-to-r from-sky-500 via-violet-500 to-emerald-500 transition-all duration-500" style="width: 2.5%"></div>
+        </div>
+      </div>
+
+      <!-- Tarjeta principal de la pregunta -->
+      <div id="question-card" class="rounded-3xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 p-5 sm:p-8 shadow-xl shadow-slate-900/5 dark:shadow-black/30 space-y-6">
+        <!-- Cabecera de la pregunta -->
+        <div class="flex items-start justify-between gap-4">
+          <div class="space-y-1">
+            <p id="quiz-stage-title" class="text-xs font-bold uppercase tracking-wider text-slate-400">Etapa 1 • Ciudadanía e identidad digital</p>
+            <h2 id="quiz-question-text" class="text-lg sm:text-xl font-bold leading-relaxed text-slate-900 dark:text-white">
+              Cargando pregunta...
+            </h2>
+          </div>
+
+          <!-- Botón marcar pregunta para revisar -->
+          <button id="btn-flag" type="button" title="Marcar para revisar después" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-amber-500 hover:border-amber-500/40 hover:bg-amber-500/10 transition-all shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Contenedor de opciones A, B, C, D -->
+        <div id="quiz-options" class="grid grid-cols-1 gap-3">
+          <!-- Opciones generadas dinámicamente -->
+        </div>
+
+        <!-- Caja de retroalimentación (visible en modo práctica al responder) -->
+        <div id="quiz-feedback" class="hidden rounded-2xl p-4 border text-sm leading-relaxed animate-fadeSlide">
+          <div class="flex items-start gap-3">
+            <div id="feedback-icon" class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 font-bold"></div>
+            <div class="space-y-1">
+              <p id="feedback-title" class="font-bold"></p>
+              <p id="feedback-explanation" class="text-xs sm:text-sm opacity-90"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles inferiores de navegación -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <button id="btn-prev" type="button" class="px-5 py-3 rounded-xl font-semibold text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 disabled:opacity-40 disabled:pointer-events-none transition-all inline-flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Anterior</span>
+          </button>
+
+          <p class="hidden md:block text-xs text-slate-400 text-center">
+            Atajos: teclas <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono">A</kbd>–<kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono">D</kbd> para responder • <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono">→</kbd> siguiente
+          </p>
+
+          <div class="flex items-center gap-2.5">
+            <button id="btn-finish-early" type="button" class="px-4 py-3 rounded-xl font-semibold text-sm bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 transition-all">
+              Finalizar
+            </button>
+            <button id="btn-next" type="button" class="flex-1 sm:flex-none px-6 py-3 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-500 shadow-md shadow-indigo-500/25 transition-all inline-flex items-center justify-center gap-2">
+              <span id="btn-next-label">Siguiente</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- PANTALLA 3: TABLERO VISUAL DE RESULTADOS Y REVISIÓN       -->
+    <!-- ========================================================= -->
+    <section id="screen-results" class="hidden space-y-6 animate-fadeSlide">
+      <!-- Tarjeta principal de calificación -->
+      <div class="rounded-3xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-10 shadow-xl">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <!-- Gráfica circular SVG animada -->
+          <div class="relative w-44 h-44 shrink-0 flex items-center justify-center">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="10" class="text-slate-200 dark:text-slate-800" />
+              <circle id="result-ring" cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.72" stroke-dashoffset="326.72" class="text-indigo-500 transition-all duration-1000 ease-out" />
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span id="result-percent" class="text-4xl font-extrabold tracking-tight">0%</span>
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 mt-0.5">Calificación</span>
+            </div>
+          </div>
+
+          <!-- Resumen textual y métricas -->
+          <div class="flex-1 text-center md:text-left space-y-3 w-full">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold" id="result-badge">
+              Resultado final
+            </div>
+            <h2 id="result-headline" class="text-2xl sm:text-3xl font-extrabold tracking-tight">¡Examen completado!</h2>
+            <p id="result-subtext" class="text-sm sm:text-base text-slate-600 dark:text-slate-300"></p>
+
+            <!-- Mini tarjetas de métricas -->
+            <div class="grid grid-cols-3 gap-3 pt-2">
+              <div class="rounded-2xl p-3 bg-emerald-500/10 border border-emerald-500/20 text-center">
+                <div id="metric-correct" class="text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">0</div>
+                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Aciertos</div>
+              </div>
+              <div class="rounded-2xl p-3 bg-rose-500/10 border border-rose-500/20 text-center">
+                <div id="metric-incorrect" class="text-xl sm:text-2xl font-extrabold text-rose-600 dark:text-rose-400">0</div>
+                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Errores</div>
+              </div>
+              <div class="rounded-2xl p-3 bg-indigo-500/10 border border-indigo-500/20 text-center">
+                <div id="metric-time" class="text-xl sm:text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 tabular-nums">00:00</div>
+                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Tiempo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de acción en resultados -->
+        <div class="flex flex-wrap items-center justify-center md:justify-end gap-3 mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+          <button id="btn-retry-missed" type="button" class="hidden px-5 py-3 rounded-xl font-bold text-sm bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition-all">
+            Practicar solo incorrectas
+          </button>
+          <button id="btn-copy-summary" type="button" class="px-5 py-3 rounded-xl font-semibold text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            <span>Copiar resultado</span>
+          </button>
+          <button id="btn-restart" type="button" class="px-6 py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 shadow-lg shadow-indigo-500/25 transition-all">
+            Nuevo Examen
+          </button>
+        </div>
+      </div>
+
+      <!-- Desglose visual por Etapa -->
+      <div class="rounded-3xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-lg space-y-5">
+        <h3 class="text-lg font-bold">Desempeño por Etapa</h3>
+        <div id="stage-breakdown" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Barras generadas dinámicamente -->
+        </div>
+      </div>
+
+      <!-- Revisión detallada reactivo por reactivo -->
+      <div class="rounded-3xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-lg space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <h3 class="text-lg font-bold">Revisión detallada de respuestas</h3>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button type="button" data-filter="all" class="review-filter px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white transition-all">Todas</button>
+            <button type="button" data-filter="incorrect" class="review-filter px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all">Incorrectas</button>
+            <button type="button" data-filter="correct" class="review-filter px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all">Correctas</button>
+          </div>
+        </div>
+
+        <div id="review-list" class="space-y-4">
+          <!-- Tarjetas de revisión generadas dinámicamente -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: MAPA INTERACTIVO DE PREGUNTAS                      -->
+  <!-- ========================================================= -->
+  <div id="modal-map" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+    <div class="w-full max-w-2xl rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 max-h-[85vh] flex flex-col">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-bold">Mapa de Preguntas</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Haz clic en cualquier número para saltar directamente a ese reactivo.</p>
+        </div>
+        <button id="btn-close-map" type="button" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500">✕</button>
+      </div>
+
+      <!-- Leyenda de colores -->
+      <div class="flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-300">
+        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-indigo-600"></span> Actual</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500"></span> Contestada / Correcta</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500"></span> Incorrecta (Práctica)</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded border-2 border-amber-500"></span> Marcada</span>
+      </div>
+
+      <!-- Cuadrícula de botones -->
+      <div id="map-grid" class="grid grid-cols-5 sm:grid-cols-8 gap-2.5 overflow-y-auto pr-1 py-1">
+        <!-- Botones generados dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: CONFIRMACIÓN PERSONALIZADA (SIN ALERT/CONFIRM)     -->
+  <!-- ========================================================= -->
+  <div id="modal-confirm" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm">
+    <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5">
+      <div class="flex items-start gap-3.5">
+        <div class="w-11 h-11 rounded-2xl bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div class="space-y-1">
+          <h3 id="confirm-title" class="text-lg font-bold">¿Finalizar el examen?</h3>
+          <p id="confirm-message" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button id="btn-confirm-cancel" type="button" class="px-4 py-2.5 rounded-xl font-semibold text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all">
+          Continuar respondiendo
+        </button>
+        <button id="btn-confirm-ok" type="button" class="px-5 py-2.5 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-500 shadow-md shadow-indigo-500/25 transition-all">
+          Sí, calificar ahora
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificación flotante (Toast) -->
+  <div id="toast" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold shadow-2xl">
+    Notificación
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- LÓGICA DE LA APLICACIÓN (JAVASCRIPT)                      -->
+  <!-- ========================================================= -->
+  <script>
+    /**
+     * Metadatos visuales para cada una de las 4 Etapas de Cultura Digital I.
+     */
+    const STAGE_META = {
+      1: {
+        name: 'Etapa 1: Ciudadanía e identidad digital',
+        short: 'Etapa 1',
+        badgeClass: 'bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-500/30',
+        barClass: 'bg-sky-500',
+      },
+      2: {
+        name: 'Etapa 2: Pensamiento crítico y uso ético de la información',
+        short: 'Etapa 2',
+        badgeClass: 'bg-violet-500/15 text-violet-700 dark:text-violet-300 border-violet-500/30',
+        barClass: 'bg-violet-500',
+      },
+      3: {
+        name: 'Etapa 3: Inteligencia Artificial y cultura digital emergente',
+        short: 'Etapa 3',
+        badgeClass: 'bg-fuchsia-500/15 text-fuchsia-700 dark:text-fuchsia-300 border-fuchsia-500/30',
+        barClass: 'bg-fuchsia-500',
+      },
+      4: {
+        name: 'Etapa 4: Aprendizaje y productividad en entornos digitales',
+        short: 'Etapa 4',
+        badgeClass: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30',
+        barClass: 'bg-emerald-500',
+      },
+    };
+
+    /**
+     * Banco completo de las 40 preguntas de Cultura Digital I (Etapas 1, 2, 3 y 4).
+     * Cada objeto incluye id, etapa, enunciado, cuatro opciones (A-D), índice correcto (0-3) y explicación.
+     */
+    const QUESTIONS_BANK = [
+      // ==================== ETAPA 1 ====================
+      {
+        id: 1,
+        stage: 1,
+        question: 'Al uso responsable, ético y seguro de las tecnologías digitales y de internet se le conoce como _________.',
+        options: ['ciberespacio', 'identidad digital', 'ciudadanía digital', 'huella digital'],
+        correct: 2,
+        explanation: 'La ciudadanía digital abarca las normas de comportamiento responsable, ético y seguro al participar en entornos digitales.'
+      },
+      {
+        id: 2,
+        stage: 1,
+        question: 'Después de iniciar sesión en una computadora de la biblioteca escolar, Sofía elimina manualmente el historial de páginas visitadas, los archivos en caché y las contraseñas guardadas para evitar que otros accedan a sus cuentas. ¿Qué herramienta de gestión está aplicando?',
+        options: ['Borrado de datos de navegación', 'Bloqueo de rastreadores y cookies', 'Navegación de incógnito', 'Permisos del sitio y del dispositivo'],
+        correct: 0,
+        explanation: 'El borrado de datos de navegación elimina el historial, cookies, caché y credenciales almacenadas en el navegador.'
+      },
+      {
+        id: 3,
+        stage: 1,
+        question: 'Diego revisa la configuración de su cuenta de Google y revoca el acceso a varios juegos y aplicaciones viejas que ya no utiliza para detener el intercambio automático de su información con terceros. ¿Qué función está utilizando?',
+        options: ['Configuración en redes sociales', 'Historial de actividad de la cuenta', 'Navegación privada', 'Administrador de apps vinculadas'],
+        correct: 3,
+        explanation: 'El administrador de apps vinculadas permite revisar y revocar permisos de aplicaciones de terceros conectadas a una cuenta.'
+      },
+      {
+        id: 4,
+        stage: 1,
+        question: 'Dentro de los conceptos fundamentales de la ciberseguridad, son debilidades o fallas que pueden ser aprovechadas por atacantes, como utilizar contraseñas débiles o no actualizar las aplicaciones.',
+        options: ['Amenazas', 'Vulnerabilidades', 'Riesgos', 'Ataques digitales'],
+        correct: 1,
+        explanation: 'Las vulnerabilidades son debilidades en sistemas, software o prácticas del usuario que los atacantes pueden explotar.'
+      },
+      {
+        id: 5,
+        stage: 1,
+        question: 'Una plataforma educativa deja de funcionar y los alumnos no pueden subir sus tareas porque un grupo de atacantes saturó sus servidores enviando millones de visitas falsas al mismo tiempo. ¿Qué tipo de ataque digital ocurrió?',
+        options: ['Phishing', 'Spam', 'DDoS / DoS (Denegación de Servicio)', 'Adware / Malvertising'],
+        correct: 2,
+        explanation: 'Un ataque DoS o DDoS busca colapsar un servidor o servicio sobrecargándolo con tráfico falso masivo.'
+      },
+      {
+        id: 6,
+        stage: 1,
+        question: 'Es un programa diseñado específicamente para dañar dispositivos, robar información o controlar sistemas sin autorización del usuario.',
+        options: ['Malware', 'Ingeniería social', 'Spam', 'Robo de identidad'],
+        correct: 0,
+        explanation: 'Malware (software malicioso) engloba programas creados para afectar equipos, sustraer datos o tomar control no autorizado.'
+      },
+      {
+        id: 7,
+        stage: 1,
+        question: 'En redes sociales circula un video falso, creado con inteligencia artificial, donde se imita de forma hiperrealista el rostro y la voz de un estudiante diciendo algo ofensivo que nunca expresó. ¿Cómo se denomina esta amenaza digital?',
+        options: ['Adware', 'Phishing', 'Suplantación de identidad', 'Deepfake'],
+        correct: 3,
+        explanation: 'Los deepfakes utilizan inteligencia artificial para sintetizar rostros y voces hiperrealistas con fines de manipulación o engaño.'
+      },
+      {
+        id: 8,
+        stage: 1,
+        question: 'De acuerdo con las recomendaciones para la gestión segura de contraseñas, ¿cuál de las siguientes prácticas protege adecuadamente una cuenta digital?',
+        options: [
+          'Usar fechas de nacimiento o nombres de familiares fáciles de recordar.',
+          'Utilizar al menos 12 caracteres combinando letras, números y símbolos.',
+          'Reutilizar la misma clave en redes sociales y plataformas escolares.',
+          'Emplear únicamente las iniciales del nombre propio seguidas de números consecutivos.'
+        ],
+        correct: 1,
+        explanation: 'Una contraseña robusta debe tener al menos 12 caracteres, mezclar mayúsculas, minúsculas, números y símbolos, y ser única para cada cuenta.'
+      },
+      {
+        id: 9,
+        stage: 1,
+        question: 'Al iniciar sesión en su correo institucional, además de escribir su contraseña, a Valeria se le solicita ingresar un código enviado a su teléfono celular. ¿Qué medida de seguridad tiene activada?',
+        options: ['Bloqueo de rastreadores', 'Administrador de contraseñas', 'Autenticación multifactor (MFA o 2FA)', 'Control de permisos del dispositivo'],
+        correct: 2,
+        explanation: 'La autenticación multifactor (MFA/2FA) añade una capa adicional de verificación mediante un segundo factor como un código temporal.'
+      },
+      {
+        id: 10,
+        stage: 1,
+        question: 'Consiste en compartir o distribuir información mediante internet, lo cual incluye publicaciones, fotografías, videos, noticias, cadenas, memes o mensajes privados.',
+        options: ['Difusión digital', 'Autoría digital', 'Autocuidado digital', 'Derechos de autor'],
+        correct: 0,
+        explanation: 'La difusión digital es la acción de propagar contenidos de cualquier formato a través de redes y plataformas en línea.'
+      },
+
+      // ==================== ETAPA 2 ====================
+      {
+        id: 11,
+        stage: 2,
+        question: 'Se refiere a cualquier contenido que se crea, almacena, transmite o consulta mediante dispositivos electrónicos y tecnologías digitales, en formatos como texto, imágenes, videos o audios.',
+        options: ['Arquitectura de información', 'Información digital', 'Computación en la nube', 'Repositorio colaborativo'],
+        correct: 1,
+        explanation: 'La información digital comprende todo contenido codificado en formato electrónico que circula en dispositivos y redes.'
+      },
+      {
+        id: 12,
+        stage: 2,
+        question: 'Antes de aceptar una publicación viral como verdadera, Luis cuestiona su contenido, identifica posibles sesgos o intereses ocultos y contrasta diferentes puntos de vista. ¿Qué habilidad clave para gestionar información digital está ejerciendo?',
+        options: ['Gestión de la información', 'Búsqueda eficiente de información', 'Comunicación digital responsable', 'Pensamiento crítico'],
+        correct: 3,
+        explanation: 'El pensamiento crítico permite evaluar objetivamente fuentes, detectar sesgos y verificar la veracidad antes de asumir o compartir información.'
+      },
+      {
+        id: 13,
+        stage: 2,
+        question: 'Dentro de la protección de datos personales, existe una categoría que requiere resguardo especial porque su divulgación indebida puede generar discriminación o afectar gravemente la dignidad y seguridad de la persona. ¿Cuál de las siguientes opciones contiene ejemplos de datos sensibles?',
+        options: [
+          'Datos biométricos e información sobre el estado de salud',
+          'Matrícula escolar y nombre completo',
+          'Correo electrónico y dirección IP',
+          'Número telefónico y fecha de nacimiento'
+        ],
+        correct: 0,
+        explanation: 'Los datos sensibles incluyen información íntima como estado de salud, datos biométricos, origen étnico, creencias religiosas u opiniones políticas.'
+      },
+      {
+        id: 14,
+        stage: 2,
+        question: 'Una ilustradora publica su obra bajo una licencia Creative Commons que permite a otras personas compartirla, pero prohíbe estrictamente modificarla o adaptarla. ¿Qué condición corresponde a esta restricción?',
+        options: ['Atribución (BY)', 'No Comercial (NC)', 'Sin Obras Derivadas (ND)', 'Compartir Igual (SA)'],
+        correct: 2,
+        explanation: 'La condición Sin Obras Derivadas (ND) autoriza redistribuir la obra intacta, pero impide alterarla o crear versiones derivadas.'
+      },
+      {
+        id: 15,
+        stage: 2,
+        question: 'Un docente crea una guía de estudio y autoriza que otros usuarios la adapten, siempre y cuando las obras derivadas se distribuyan exactamente bajo la misma licencia original. ¿Qué condición de Creative Commons está aplicando?',
+        options: ['Sin Obras Derivadas (ND)', 'Compartir Igual (SA)', 'Atribución (BY)', 'No Comercial (NC)'],
+        correct: 1,
+        explanation: 'Compartir Igual (SA - ShareAlike) exige que cualquier obra derivada se licencie bajo términos idénticos a los de la obra original.'
+      },
+      {
+        id: 16,
+        stage: 2,
+        question: 'Al redactar un ensayo escolar, Camila explica con sus propias palabras las ideas de un artículo científico y coloca la cita correspondiente al autor original. Esta práctica se conoce como _________.',
+        options: ['plagio digital', 'atribución libre', 'uso de dominio público', 'parafraseo'],
+        correct: 3,
+        explanation: 'El parafraseo consiste en expresar las ideas de otro autor con palabras propias reconociendo siempre la fuente original mediante citación.'
+      },
+      {
+        id: 17,
+        stage: 2,
+        question: 'Consiste en emplear contenidos de terceros de manera ética y legal, verificando que cuenten con permisos, licencias abiertas o pertenezcan al dominio público, además de citar correctamente las fuentes.',
+        options: ['Uso legítimo de recursos digitales', 'Integridad documental', 'Propiedad compartida', 'Búsqueda especializada'],
+        correct: 0,
+        explanation: 'El uso legítimo de recursos digitales garantiza el respeto a los derechos de autor mediante permisos, licencias abiertas y citas adecuadas.'
+      },
+      {
+        id: 18,
+        stage: 2,
+        question: 'Dentro del ecosistema Microsoft 365 para la educación, ¿qué herramienta funciona como un cuaderno digital que permite organizar apuntes, imágenes, enlaces, audios y materiales de estudio en un solo lugar?',
+        options: ['Microsoft Teams', 'OneDrive', 'OneNote', 'SharePoint'],
+        correct: 2,
+        explanation: 'Microsoft OneNote es un bloc de notas o cuaderno digital diseñado para estructurar apuntes multimedia por secciones y páginas.'
+      },
+      {
+        id: 19,
+        stage: 2,
+        question: 'Tres compañeros trabajan al mismo tiempo en un reporte almacenado en la nube, escribiendo y corrigiendo distintas secciones simultáneamente sin necesidad de enviarse múltiples versiones del archivo por correo. ¿Qué función están aprovechando?',
+        options: ['Control de versiones', 'Edición colaborativa', 'Arquitectura de información', 'Sincronización local'],
+        correct: 1,
+        explanation: 'La edición colaborativa permite que varios usuarios creen y modifiquen un mismo documento en tiempo real desde la nube.'
+      },
+      {
+        id: 20,
+        stage: 2,
+        question: 'Es la forma en que se organiza, clasifica y estructura la información dentro de un entorno digital para facilitar su acceso, comprensión y gestión.',
+        options: ['Computación en la nube', 'Integridad académica', 'Licencia abierta', 'Arquitectura de información'],
+        correct: 3,
+        explanation: 'La arquitectura de información ordena carpetas, repositorios y contenidos digitales para hacerlos intuitivos y fáciles de localizar.'
+      },
+
+      // ==================== ETAPA 3 ====================
+      {
+        id: 21,
+        stage: 3,
+        question: 'Rama de las Ciencias de la Computación que desarrolla sistemas capaces de realizar tareas que normalmente requieren inteligencia humana, como reconocer imágenes, comprender lenguaje o aprender a partir de datos.',
+        options: ['Inteligencia Artificial', 'Arquitectura de información', 'Computación en la nube', 'Ingeniería de redes'],
+        correct: 0,
+        explanation: 'La Inteligencia Artificial (IA) diseña sistemas computacionales capaces de percibir, aprender, razonar y resolver tareas complejas.'
+      },
+      {
+        id: 22,
+        stage: 3,
+        question: '¿En qué evento histórico de 1956, encabezado por John McCarthy, se acuñó formalmente el término "Inteligencia Artificial"?',
+        options: ['La creación del programa ELIZA', 'La prueba de Alan Turing', 'La Conferencia de Dartmouth', 'La victoria de Deep Blue'],
+        correct: 2,
+        explanation: 'La Conferencia de Dartmouth de 1956 es reconocida como el nacimiento oficial de la Inteligencia Artificial como disciplina científica.'
+      },
+      {
+        id: 23,
+        stage: 3,
+        question: 'En el contexto de las aplicaciones tecnológicas de la Inteligencia Artificial, la realización de tareas mediante sistemas tecnológicos con poca o ninguna intervención humana se conoce como _________.',
+        options: ['análisis de datos', 'automatización', 'detección de fraudes', 'entrenamiento supervisado'],
+        correct: 1,
+        explanation: 'La automatización permite ejecutar procesos repetitivos o complejos de manera autónoma reduciendo la intervención humana directa.'
+      },
+      {
+        id: 24,
+        stage: 3,
+        question: 'Los asistentes de voz, los algoritmos de recomendación en plataformas de video y los chatbots están diseñados para realizar tareas concretas dentro de un ámbito específico. ¿A qué categoría pertenecen?',
+        options: ['Inteligencia Artificial general', 'Superinteligencia Artificial', 'Modelo de lenguaje absoluto', 'Inteligencia Artificial débil o estrecha'],
+        correct: 3,
+        explanation: 'La IA débil o estrecha (Narrow AI) se especializa en tareas puntuales y representa todos los sistemas de IA actuales.'
+      },
+      {
+        id: 25,
+        stage: 3,
+        question: 'Es un sistema hipotético y especulativo que superaría con creces el intelecto humano en todos los aspectos, incluyendo la creatividad científica, la sabiduría general y las habilidades sociales.',
+        options: ['Superinteligencia Artificial', 'Inteligencia Artificial generativa', 'Inteligencia Artificial estrecha', 'Inteligencia Artificial general'],
+        correct: 0,
+        explanation: 'La Superinteligencia Artificial es un concepto teórico de sistemas que rebasarían ampliamente las capacidades cognitivas humanas.'
+      },
+      {
+        id: 26,
+        stage: 3,
+        question: 'Es una rama de la Inteligencia Artificial que utiliza algoritmos capaces de analizar grandes cantidades de información para encontrar relaciones, tendencias y patrones, y así hacer predicciones o tomar decisiones basadas en datos.',
+        options: ['Modelo de lenguaje', 'Lógica simbólica', 'Machine Learning', 'Automatización básica'],
+        correct: 2,
+        explanation: 'El Machine Learning (aprendizaje automático) entrena algoritmos con datos para reconocer patrones y hacer predicciones sin programación fija.'
+      },
+      {
+        id: 27,
+        stage: 3,
+        question: 'Respecto a la relación entre Machine Learning y Deep Learning, ¿cuál de las siguientes afirmaciones es correcta?',
+        options: [
+          'Ambos conceptos son exactamente equivalentes e intercambiables.',
+          'Todo sistema de Deep Learning forma parte del Machine Learning, pero no todos los sistemas de Machine Learning utilizan redes neuronales profundas.',
+          'El Machine Learning es una subcategoría exclusiva del Deep Learning.',
+          'Ninguno de los dos requiere grandes volúmenes de datos para entrenar sus modelos.'
+        ],
+        correct: 1,
+        explanation: 'El Deep Learning es un subcampo del Machine Learning basado en redes neuronales profundas de múltiples capas.'
+      },
+      {
+        id: 28,
+        stage: 3,
+        question: 'Un estudiante requiere generar ilustraciones y representaciones visuales originales a partir de descripciones escritas para una campaña escolar. ¿Qué herramientas de IA generativa corresponden a esta función?',
+        options: ['ChatGPT y Claude', 'ELIZA y Deep Blue', 'Alexa y Siri', 'DALL-E y Midjourney'],
+        correct: 3,
+        explanation: 'DALL-E y Midjourney son plataformas de IA generativa especializadas en crear imágenes a partir de instrucciones textuales (prompts).'
+      },
+      {
+        id: 29,
+        stage: 3,
+        question: 'Debido a que los centros de datos que soportan la Inteligencia Artificial operan las 24 horas y consumen grandes cantidades de electricidad, ¿qué estrategia se impulsa para desarrollar una IA más sostenible?',
+        options: [
+          'El uso de energías renovables y el diseño de algoritmos más eficientes',
+          'La eliminación total del almacenamiento en la nube',
+          'La prohibición de sistemas de análisis de datos en la industria',
+          'El reemplazo de la IA por programas tradicionales sin internet'
+        ],
+        correct: 0,
+        explanation: 'Una IA sostenible reduce su huella ambiental combinando fuentes de energía renovable con modelos y algoritmos computacionalmente eficientes.'
+      },
+      {
+        id: 30,
+        stage: 3,
+        question: 'Al emplear una herramienta de IA generativa para estudiar, Mateo revisa críticamente las respuestas, verifica la exactitud de los datos y valida el resultado final antes de redactar su propio trabajo. ¿Qué enfoque está aplicando para evitar la deshonestidad académica?',
+        options: ['Automatización predictiva', 'Aprendizaje profundo autónomo', 'Supervisión humana (human-in-the-loop)', 'Generación asistida sin intervención'],
+        correct: 2,
+        explanation: 'El enfoque human-in-the-loop mantiene el criterio, revisión y validación humana en el centro del proceso al utilizar herramientas de IA.'
+      },
+
+      // ==================== ETAPA 4 ====================
+      {
+        id: 31,
+        stage: 4,
+        question: 'Se refiere al uso estratégico de herramientas tecnológicas para organizar actividades, administrar información, mejorar la comunicación y optimizar el trabajo individual o colaborativo.',
+        options: ['Colaboración síncrona', 'Productividad digital', 'Diseño gráfico educativo', 'Gestión documental'],
+        correct: 1,
+        explanation: 'La productividad digital integra aplicaciones y flujos tecnológicos para gestionar tiempos, tareas e información de forma más eficiente.'
+      },
+      {
+        id: 32,
+        stage: 4,
+        question: 'Andrea utiliza una aplicación como Todoist o Microsoft To Do para registrar sus pendientes escolares, establecer prioridades y asignar fechas límite. ¿A qué categoría del ecosistema de productividad digital pertenece esta herramienta?',
+        options: ['Calendario', 'Notas', 'Colaboración', 'Gestión de tareas'],
+        correct: 3,
+        explanation: 'Todoist y Microsoft To Do son aplicaciones de gestión de tareas enfocadas en listas de pendientes, prioridades y fechas límite.'
+      },
+      {
+        id: 33,
+        stage: 4,
+        question: 'Un equipo de preparatoria necesita coordinar un proyecto grupal y dar seguimiento puntual a las responsabilidades y avances de cada integrante dentro del entorno de Microsoft. ¿Qué herramienta está diseñada específicamente para la gestión colaborativa de proyectos?',
+        options: ['Microsoft Planner', 'Microsoft To Do', 'Microsoft Word', 'Outlook Calendar'],
+        correct: 0,
+        explanation: 'Microsoft Planner organiza proyectos en equipo asignando tareas, tableros de avance y responsables dentro de Microsoft 365.'
+      },
+      {
+        id: 34,
+        stage: 4,
+        question: 'Después de aplicar una encuesta sobre hábitos de estudio en Google Forms o Microsoft Forms, un equipo exporta las respuestas obtenidas para calcular promedios, identificar tendencias y generar gráficas. ¿En qué tipo de herramienta realizan este análisis?',
+        options: [
+          'Cuadernos digitales (OneNote o Notion)',
+          'Plataformas de videollamada (Teams o Slack)',
+          'Hojas de cálculo (Microsoft Excel o Google Sheets)',
+          'Bancos de imágenes con licencia abierta'
+        ],
+        correct: 2,
+        explanation: 'Las hojas de cálculo como Excel o Google Sheets permiten procesar los datos de formularios para obtener estadísticas, tablas y gráficas.'
+      },
+      {
+        id: 35,
+        stage: 4,
+        question: 'En Canva for Education, una estudiante necesita crear un material visual para representar procesos históricos y secuencias cronológicas de eventos. ¿Qué recurso educativo es el más adecuado?',
+        options: ['Cartel', 'Línea del tiempo', 'Reporte visual', 'Publicación digital'],
+        correct: 1,
+        explanation: 'La línea del tiempo es el recurso gráfico ideal para mostrar la evolución cronológica y relación secuencial de hechos históricos.'
+      },
+      {
+        id: 36,
+        stage: 4,
+        question: 'Es una plataforma de presentaciones que se caracteriza por no utilizar diapositivas tradicionales, sino un formato dinámico con "zoom" que conecta los contenidos y presenta la información de manera visual.',
+        options: ['PowerPoint', 'Adobe Express', 'Visme', 'Prezi'],
+        correct: 3,
+        explanation: 'Prezi emplea un lienzo interactivo con acercamientos (zoom) que enlaza visualmente ideas y subtemas en lugar de diapositivas lineales.'
+      },
+      {
+        id: 37,
+        stage: 4,
+        question: 'Un alumno busca una alternativa a Canva que le permita diseñar presentaciones e infografías interactivas integrando animaciones y elementos dinámicos. ¿Qué herramienta cumple con estas características?',
+        options: ['Genially', 'Microsoft To Do', 'Google Forms', 'OneDrive'],
+        correct: 0,
+        explanation: 'Genially destaca por crear presentaciones, infografías y recursos interactivos con animaciones, ventanas emergentes y elementos clicables.'
+      },
+      {
+        id: 38,
+        stage: 4,
+        question: 'Plataforma de colaboración y gestión de información de Microsoft 365 que permite crear sitios web internos, repositorios y espacios de trabajo colaborativos con el objetivo principal de centralizar la información y mejorar la comunicación.',
+        options: ['OneNote', 'Microsoft Planner', 'SharePoint', 'Canva for Education'],
+        correct: 2,
+        explanation: 'Microsoft SharePoint centraliza documentos, bibliotecas y sitios de comunicación para fortalecer el trabajo colaborativo institucional.'
+      },
+      {
+        id: 39,
+        stage: 4,
+        question: 'Al personalizar un sitio de comunicación en SharePoint, el equipo agrega accesos directos hacia los formularios, documentos y aplicaciones más consultados para reducir el tiempo de búsqueda. ¿Qué elemento están configurando?',
+        options: ['Encabezado', 'Vínculos rápidos', 'Pie de página', 'Imágenes institucionales'],
+        correct: 1,
+        explanation: 'Los vínculos rápidos (Quick links) crean accesos directos visibles hacia documentos, páginas y herramientas clave del sitio.'
+      },
+      {
+        id: 40,
+        stage: 4,
+        question: 'En la estructura de un sitio de SharePoint, ¿qué sección complementa la página al mostrar información secundaria como datos de contacto, enlaces de interés y avisos institucionales sin sobrecargar el área principal?',
+        options: ['Menú de encabezado', 'Vínculos rápidos', 'Repositorio central', 'Pie de página'],
+        correct: 3,
+        explanation: 'El pie de página agrupa información complementaria (contacto, créditos y avisos) manteniendo limpia y ordenada el área principal.'
+      }
+    ];
+
+    // =========================================================
+    // ESTADO GLOBAL DE LA APLICACIÓN
+    // =========================================================
+    const state = {
+      mode: 'practice',        // 'practice' | 'exam'
+      studentName: '',
+      activeQuestions: [],     // Lista de preguntas en la sesión actual
+      currentIndex: 0,
+      answers: {},             // { questionId: selectedOptionIndex }
+      flagged: new Set(),      // Set de questionId marcados
+      soundEnabled: true,
+      elapsedSeconds: 0,
+      timerInterval: null,
+      reviewFilter: 'all',     // 'all' | 'incorrect' | 'correct'
+      confirmCallback: null,
+    };
+
+    const LETTERS = ['A', 'B', 'C', 'D'];
+
+    // =========================================================
+    // REFERENCIAS AL DOM
+    // =========================================================
+    const el = {
+      screenStart: document.getElementById('screen-start'),
+      screenQuiz: document.getElementById('screen-quiz'),
+      screenResults: document.getElementById('screen-results'),
+      btnHome: document.getElementById('btn-home'),
+      btnTheme: document.getElementById('btn-theme'),
+      iconSun: document.getElementById('icon-sun'),
+      iconMoon: document.getElementById('icon-moon'),
+      btnSound: document.getElementById('btn-sound'),
+      iconSoundOn: document.getElementById('icon-sound-on'),
+      iconSoundOff: document.getElementById('icon-sound-off'),
+
+      inputStudentName: document.getElementById('input-student-name'),
+      selectStage: document.getElementById('select-stage'),
+      chkShuffle: document.getElementById('chk-shuffle'),
+      btnStartExam: document.getElementById('btn-start-exam'),
+      modeCards: document.querySelectorAll('.mode-card'),
+
+      quizStageBadge: document.getElementById('quiz-stage-badge'),
+      quizStageTitle: document.getElementById('quiz-stage-title'),
+      quizProgressText: document.getElementById('quiz-progress-text'),
+      quizProgressBar: document.getElementById('quiz-progress-bar'),
+      quizScoreLabel: document.getElementById('quiz-score-label'),
+      quizTimer: document.getElementById('quiz-timer'),
+      quizQuestionText: document.getElementById('quiz-question-text'),
+      quizOptions: document.getElementById('quiz-options'),
+      quizFeedback: document.getElementById('quiz-feedback'),
+      feedbackIcon: document.getElementById('feedback-icon'),
+      feedbackTitle: document.getElementById('feedback-title'),
+      feedbackExplanation: document.getElementById('feedback-explanation'),
+      btnFlag: document.getElementById('btn-flag'),
+      btnPrev: document.getElementById('btn-prev'),
+      btnNext: document.getElementById('btn-next'),
+      btnNextLabel: document.getElementById('btn-next-label'),
+      btnFinishEarly: document.getElementById('btn-finish-early'),
+      btnOpenMap: document.getElementById('btn-open-map'),
+
+      modalMap: document.getElementById('modal-map'),
+      btnCloseMap: document.getElementById('btn-close-map'),
+      mapGrid: document.getElementById('map-grid'),
+
+      modalConfirm: document.getElementById('modal-confirm'),
+      confirmTitle: document.getElementById('confirm-title'),
+      confirmMessage: document.getElementById('confirm-message'),
+      btnConfirmCancel: document.getElementById('btn-confirm-cancel'),
+      btnConfirmOk: document.getElementById('btn-confirm-ok'),
+
+      resultRing: document.getElementById('result-ring'),
+      resultPercent: document.getElementById('result-percent'),
+      resultBadge: document.getElementById('result-badge'),
+      resultHeadline: document.getElementById('result-headline'),
+      resultSubtext: document.getElementById('result-subtext'),
+      metricCorrect: document.getElementById('metric-correct'),
+      metricIncorrect: document.getElementById('metric-incorrect'),
+      metricTime: document.getElementById('metric-time'),
+      stageBreakdown: document.getElementById('stage-breakdown'),
+      reviewList: document.getElementById('review-list'),
+      reviewFilters: document.querySelectorAll('.review-filter'),
+      btnRetryMissed: document.getElementById('btn-retry-missed'),
+      btnCopySummary: document.getElementById('btn-copy-summary'),
+      btnRestart: document.getElementById('btn-restart'),
+
+      toast: document.getElementById('toast'),
+    };
+
+    // =========================================================
+    // SONIDOS SUTILES CON TONE.JS (SEGUROS CONTRA ERRORES)
+    // =========================================================
+    let synth = null;
+    function playSound(type) {
+      if (!state.soundEnabled) return;
+      try {
+        if (typeof Tone === 'undefined') return;
+        if (Tone.context.state !== 'running') {
+          Tone.start();
+        }
+        if (!synth) {
+          synth = new Tone.Synth({
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.01, decay: 0.12, sustain: 0.05, release: 0.25 },
+          }).toDestination();
+          synth.volume.value = -14;
+        }
+        const now = Tone.now();
+        if (type === 'correct') {
+          synth.triggerAttackRelease('C5', '16n', now);
+          synth.triggerAttackRelease('E5', '16n', now + 0.08);
+        } else if (type === 'wrong') {
+          synth.triggerAttackRelease('E3', '16n', now);
+          synth.triggerAttackRelease('C3', '8n', now + 0.09);
+        } else if (type === 'click') {
+          synth.triggerAttackRelease('G4', '32n', now);
+        } else if (type === 'finish') {
+          synth.triggerAttackRelease('C5', '16n', now);
+          synth.triggerAttackRelease('E5', '16n', now + 0.1);
+          synth.triggerAttackRelease('G5', '8n', now + 0.2);
+        }
+      } catch (err) {
+        // Silencioso si el navegador bloquea el audio o Tone.js no está disponible
+      }
+    }
+
+    // =========================================================
+    // UTILIDADES GENERALES
+    // =========================================================
+    function formatTime(totalSec) {
+      const mins = Math.floor(totalSec / 60).toString().padStart(2, '0');
+      const secs = (totalSec % 60).toString().padStart(2, '0');
+      return `${mins}:${secs}`;
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    let toastTimeout = null;
+    function showToast(message) {
+      el.toast.textContent = message;
+      el.toast.classList.remove('hidden');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        el.toast.classList.add('hidden');
+      }, 2600);
+    }
+
+    function showConfirmModal(title, message, okLabel, callback) {
+      el.confirmTitle.textContent = title;
+      el.confirmMessage.textContent = message;
+      el.btnConfirmOk.textContent = okLabel;
+      state.confirmCallback = callback;
+      el.modalConfirm.classList.remove('hidden');
+    }
+
+    function closeConfirmModal() {
+      el.modalConfirm.classList.add('hidden');
+      state.confirmCallback = null;
+    }
+
+    function switchScreen(screenName) {
+      el.screenStart.classList.add('hidden');
+      el.screenQuiz.classList.add('hidden');
+      el.screenResults.classList.add('hidden');
+
+      if (screenName === 'start') {
+        el.screenStart.classList.remove('hidden');
+        el.btnHome.classList.add('hidden');
+        stopTimer();
+      } else if (screenName === 'quiz') {
+        el.screenQuiz.classList.remove('hidden');
+        el.btnHome.classList.remove('hidden');
+      } else if (screenName === 'results') {
+        el.screenResults.classList.remove('hidden');
+        el.btnHome.classList.remove('hidden');
+        stopTimer();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================
+    // TEMPORIZADOR
+    // =========================================================
+    function startTimer() {
+      stopTimer();
+      state.elapsedSeconds = 0;
+      el.quizTimer.textContent = '00:00';
+      state.timerInterval = setInterval(() => {
+        state.elapsedSeconds += 1;
+        el.quizTimer.textContent = formatTime(state.elapsedSeconds);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+      }
+    }
+
+    // =========================================================
+    // INICIO Y CONTROL DEL EXAMEN
+    // =========================================================
+    function startSession(customQuestions = null) {
+      try {
+        state.studentName = el.inputStudentName.value.trim();
+        state.answers = {};
+        state.flagged = new Set();
+        state.currentIndex = 0;
+
+        if (customQuestions && customQuestions.length > 0) {
+          state.activeQuestions = customQuestions;
+        } else {
+          const selectedStage = el.selectStage.value;
+          let filtered = selectedStage === 'all'
+            ? [...QUESTIONS_BANK]
+            : QUESTIONS_BANK.filter(q => q.stage === Number(selectedStage));
+
+          if (el.chkShuffle.checked) {
+            filtered = shuffleArray(filtered);
+          }
+          state.activeQuestions = filtered;
+        }
+
+        switchScreen('quiz');
+        startTimer();
+        renderQuestion();
+      } catch (err) {
+        console.error('Error al iniciar el examen:', err);
+        showToast('Ocurrió un error al iniciar. Intenta de nuevo.');
+      }
+    }
+
+    /**
+     * Renderiza la pregunta actual, sus 4 incisos, indicadores y retroalimentación.
+     */
+    function renderQuestion() {
+      const q = state.activeQuestions[state.currentIndex];
+      if (!q) return;
+
+      const total = state.activeQuestions.length;
+      const meta = STAGE_META[q.stage];
+      const userAnswer = state.answers[q.id];
+      const hasAnswered = userAnswer !== undefined;
+
+      // Insignia de etapa y título
+      el.quizStageBadge.className = `px-3 py-1 rounded-full text-xs font-bold border ${meta.badgeClass}`;
+      el.quizStageBadge.textContent = meta.short;
+      el.quizStageTitle.textContent = `${meta.name} • Reactivo #${q.id}`;
+
+      // Progreso
+      el.quizProgressText.textContent = `Pregunta ${state.currentIndex + 1} de ${total}`;
+      const progressPct = ((state.currentIndex + 1) / total) * 100;
+      el.quizProgressBar.style.width = `${progressPct}%`;
+
+      // Píldora de puntaje o avance
+      updateScorePill();
+
+      // Texto de la pregunta
+      el.quizQuestionText.textContent = `${state.currentIndex + 1}. ${q.question}`;
+
+      // Estado del botón de bandera
+      if (state.flagged.has(q.id)) {
+        el.btnFlag.className = 'p-2.5 rounded-xl border border-amber-500/50 bg-amber-500/15 text-amber-500 transition-all shrink-0';
+      } else {
+        el.btnFlag.className = 'p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-amber-500 hover:border-amber-500/40 hover:bg-amber-500/10 transition-all shrink-0';
+      }
+
+      // Renderizar opciones A, B, C, D
+      el.quizOptions.innerHTML = '';
+      q.options.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+
+        // Estilos dinámicos según modo y estado de respuesta
+        let cardClasses = 'w-full text-left p-4 rounded-2xl border-2 transition-all duration-200 flex items-center gap-3.5 group focus:outline-none focus:ring-2 focus:ring-indigo-500 ';
+        let badgeClasses = 'w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-colors ';
+        let badgeContent = LETTERS[idx];
+
+        if (state.mode === 'practice' && hasAnswered) {
+          // Retroalimentación inmediata en modo práctica
+          if (idx === q.correct) {
+            cardClasses += 'border-emerald-500 bg-emerald-500/10 text-emerald-900 dark:text-emerald-100';
+            badgeClasses += 'bg-emerald-500 text-white';
+            badgeContent = '✓';
+          } else if (idx === userAnswer && idx !== q.correct) {
+            cardClasses += 'border-rose-500 bg-rose-500/10 text-rose-900 dark:text-rose-100';
+            badgeClasses += 'bg-rose-500 text-white';
+            badgeContent = '✕';
+          } else {
+            cardClasses += 'border-slate-200/70 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 opacity-60';
+            badgeClasses += 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400';
+          }
+          btn.disabled = true;
+        } else if (state.mode === 'exam' && idx === userAnswer) {
+          // Selección activa en modo simulacro real
+          cardClasses += 'border-indigo-500 bg-indigo-500/10 text-indigo-950 dark:text-indigo-100 shadow-sm';
+          badgeClasses += 'bg-indigo-600 text-white';
+        } else {
+          // Estado normal sin responder
+          cardClasses += 'border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-indigo-500/5 text-slate-800 dark:text-slate-100 cursor-pointer active:scale-[0.99]';
+          badgeClasses += 'bg-slate-200/80 dark:bg-slate-700/80 text-slate-700 dark:text-slate-200 group-hover:bg-indigo-600 group-hover:text-white';
+        }
+
+        btn.className = cardClasses;
+        btn.innerHTML = `
+          <span class="${badgeClasses}">${badgeContent}</span>
+          <span class="text-sm sm:text-base font-medium leading-snug">${optText}</span>
+        `;
+        btn.addEventListener('click', () => handleSelectOption(idx));
+        el.quizOptions.appendChild(btn);
+      });
+
+      // Retroalimentación conceptual en modo práctica
+      if (state.mode === 'practice' && hasAnswered) {
+        const isRight = userAnswer === q.correct;
+        el.quizFeedback.classList.remove('hidden');
+        if (isRight) {
+          el.quizFeedback.className = 'rounded-2xl p-4 border border-emerald-500/30 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200 text-sm leading-relaxed animate-fadeSlide';
+          el.feedbackIcon.className = 'w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold';
+          el.feedbackIcon.textContent = '✓';
+          el.feedbackTitle.textContent = '¡Respuesta correcta!';
+        } else {
+          el.quizFeedback.className = 'rounded-2xl p-4 border border-rose-500/30 bg-rose-500/10 text-rose-900 dark:text-rose-200 text-sm leading-relaxed animate-fadeSlide';
+          el.feedbackIcon.className = 'w-7 h-7 rounded-full bg-rose-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold';
+          el.feedbackIcon.textContent = '✕';
+          el.feedbackTitle.textContent = `Incorrecto — La respuesta correcta es ${LETTERS[q.correct]}) ${q.options[q.correct]}`;
+        }
+        el.feedbackExplanation.textContent = q.explanation;
+      } else {
+        el.quizFeedback.classList.add('hidden');
+      }
+
+      // Botones de navegación
+      el.btnPrev.disabled = state.currentIndex === 0;
+      const isLast = state.currentIndex === total - 1;
+      el.btnNextLabel.textContent = isLast ? 'Ver Resultados' : 'Siguiente';
+    }
+
+    function handleSelectOption(optionIdx) {
+      const q = state.activeQuestions[state.currentIndex];
+      if (!q) return;
+
+      // En modo práctica, una vez respondida no se sobreescribe
+      if (state.mode === 'practice' && state.answers[q.id] !== undefined) return;
+
+      state.answers[q.id] = optionIdx;
+
+      if (state.mode === 'practice') {
+        playSound(optionIdx === q.correct ? 'correct' : 'wrong');
+      } else {
+        playSound('click');
+      }
+
+      renderQuestion();
+    }
+
+    function updateScorePill() {
+      const answeredCount = Object.keys(state.answers).length;
+      if (state.mode === 'practice') {
+        let correctCount = 0;
+        state.activeQuestions.forEach(q => {
+          if (state.answers[q.id] === q.correct) correctCount++;
+        });
+        el.quizScoreLabel.textContent = `Aciertos: ${correctCount}/${answeredCount}`;
+      } else {
+        el.quizScoreLabel.textContent = `Contestadas: ${answeredCount}/${state.activeQuestions.length}`;
+      }
+    }
+
+    function attemptFinishExam() {
+      const total = state.activeQuestions.length;
+      const answered = Object.keys(state.answers).length;
+      const unanswered = total - answered;
+
+      if (unanswered > 0) {
+        showConfirmModal(
+          'Aún tienes preguntas sin responder',
+          `Has contestado ${answered} de ${total} reactivos (faltan ${unanswered}). Las preguntas sin responder se contarán como incorrectas. ¿Deseas finalizar y ver tu calificación?`,
+          'Finalizar y calificar',
+          () => finishExam()
+        );
+      } else {
+        finishExam();
+      }
+    }
+
+    // =========================================================
+    // PANTALLA DE RESULTADOS Y ANÁLISIS VISUAL
+    // =========================================================
+    function finishExam() {
+      stopTimer();
+      playSound('finish');
+      switchScreen('results');
+
+      const total = state.activeQuestions.length;
+      let correctCount = 0;
+      const missedQuestions = [];
+
+      // Conteo global y por etapa
+      const stageStats = {
+        1: { total: 0, correct: 0 },
+        2: { total: 0, correct: 0 },
+        3: { total: 0, correct: 0 },
+        4: { total: 0, correct: 0 },
+      };
+
+      state.activeQuestions.forEach(q => {
+        stageStats[q.stage].total += 1;
+        if (state.answers[q.id] === q.correct) {
+          correctCount += 1;
+          stageStats[q.stage].correct += 1;
+        } else {
+          missedQuestions.push(q);
+        }
+      });
+
+      const incorrectCount = total - correctCount;
+      const percent = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+      // Animar anillo circular SVG (circunferencia = 2 * PI * 52 = 326.72)
+      const circumference = 326.72;
+      const offset = circumference - (percent / 100) * circumference;
+      el.resultRing.style.strokeDashoffset = circumference;
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          el.resultRing.style.strokeDashoffset = offset;
+        }, 80);
+      });
+
+      // Color y mensaje según desempeño
+      let ringColor = 'text-emerald-500';
+      let badgeClass = 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30';
+      let badgeText = 'Dominio Sobresaliente';
+      let headline = state.studentName ? `¡Excelente trabajo, ${state.studentName}!` : '¡Excelente trabajo!';
+      let subtext = 'Demuestras un dominio sólido de los temas de Cultura Digital I. ¡Estás listo para tu evaluación!';
+
+      if (percent < 60) {
+        ringColor = 'text-rose-500';
+        badgeClass = 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/30';
+        badgeText = 'Refuerzo Necesario';
+        headline = state.studentName ? `Sigue practicando, ${state.studentName}` : 'Sigue practicando';
+        subtext = 'Revisa las respuestas incorrectas y usa el botón para repasar los reactivos donde tuviste mayor dificultad.';
+      } else if (percent < 80) {
+        ringColor = 'text-amber-500';
+        badgeClass = 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30';
+        badgeText = 'Desempeño Satisfactorio';
+        headline = state.studentName ? `¡Buen avance, ${state.studentName}!` : '¡Buen avance!';
+        subtext = 'Tienes una buena base. Repasa las etapas con menor porcentaje para alcanzar la excelencia.';
+      } else if (percent < 90) {
+        ringColor = 'text-indigo-500';
+        badgeClass = 'bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30';
+        badgeText = 'Muy Buen Nivel';
+        headline = state.studentName ? `¡Muy bien hecho, ${state.studentName}!` : '¡Muy bien hecho!';
+        subtext = 'Muestras un gran manejo de los conceptos clave. Un breve repaso en tus pocos errores te dará el 100%.';
+      }
+
+      el.resultRing.setAttribute('class', `${ringColor} transition-all duration-1000 ease-out`);
+      el.resultPercent.textContent = `${percent}%`;
+      el.resultBadge.className = `inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold ${badgeClass}`;
+      el.resultBadge.textContent = badgeText;
+      el.resultHeadline.textContent = headline;
+      el.resultSubtext.textContent = subtext;
+
+      el.metricCorrect.textContent = correctCount;
+      el.metricIncorrect.textContent = incorrectCount;
+      el.metricTime.textContent = formatTime(state.elapsedSeconds);
+
+      // Mostrar botón "Practicar solo incorrectas" si hubo errores
+      if (missedQuestions.length > 0) {
+        el.btnRetryMissed.classList.remove('hidden');
+        el.btnRetryMissed.textContent = `Repasar ${missedQuestions.length} incorrecta${missedQuestions.length === 1 ? '' : 's'}`;
+        el.btnRetryMissed.onclick = () => {
+          state.mode = 'practice';
+          startSession(missedQuestions);
+        };
+      } else {
+        el.btnRetryMissed.classList.add('hidden');
+      }
+
+      // Renderizar desglose por etapa
+      el.stageBreakdown.innerHTML = '';
+      [1, 2, 3, 4].forEach(stageNum => {
+        const st = stageStats[stageNum];
+        if (st.total === 0) return;
+        const pct = Math.round((st.correct / st.total) * 100);
+        const meta = STAGE_META[stageNum];
+
+        const card = document.createElement('div');
+        card.className = 'rounded-2xl p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/70 space-y-2.5';
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">${meta.name}</span>
+            <span class="text-xs font-extrabold px-2.5 py-1 rounded-lg ${meta.badgeClass} shrink-0">${st.correct}/${st.total} (${pct}%)</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full rounded-full ${meta.barClass} transition-all duration-700" style="width: ${pct}%"></div>
+          </div>
+        `;
+        el.stageBreakdown.appendChild(card);
+      });
+
+      // Reiniciar filtro de revisión y mostrar lista
+      state.reviewFilter = 'all';
+      updateReviewFilterButtons();
+      renderReviewList();
+    }
+
+    function updateReviewFilterButtons() {
+      el.reviewFilters.forEach(btn => {
+        const active = btn.dataset.filter === state.reviewFilter;
+        btn.className = active
+          ? 'review-filter px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white transition-all'
+          : 'review-filter px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
+      });
+    }
+
+    function renderReviewList() {
+      el.reviewList.innerHTML = '';
+
+      const items = state.activeQuestions.filter(q => {
+        const isCorrect = state.answers[q.id] === q.correct;
+        if (state.reviewFilter === 'correct') return isCorrect;
+        if (state.reviewFilter === 'incorrect') return !isCorrect;
+        return true;
+      });
+
+      if (items.length === 0) {
+        el.reviewList.innerHTML = `
+          <div class="text-center py-8 text-sm text-slate-500 dark:text-slate-400">
+            No hay preguntas en esta categoría.
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(q => {
+        const userAns = state.answers[q.id];
+        const isCorrect = userAns === q.correct;
+        const meta = STAGE_META[q.stage];
+        const userText = userAns !== undefined ? `${LETTERS[userAns]}) ${q.options[userAns]}` : 'Sin responder';
+        const correctText = `${LETTERS[q.correct]}) ${q.options[q.correct]}`;
+
+        const card = document.createElement('div');
+        card.className = `rounded-2xl p-4 sm:p-5 border ${
+          isCorrect
+            ? 'border-emerald-500/25 bg-emerald-500/5'
+            : 'border-rose-500/30 bg-rose-500/5'
+        } space-y-2.5`;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${meta.badgeClass}">Reactivo #${q.id} • ${meta.short}</span>
+            <span class="text-xs font-bold ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
+              ${isCorrect ? '✓ Correcta' : '✕ Incorrecta'}
+            </span>
+          </div>
+          <p class="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100 leading-snug">${q.question}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm pt-1">
+            <div class="rounded-xl p-2.5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/70 dark:border-slate-800">
+              <span class="block text-[11px] font-bold uppercase text-slate-400">Tu respuesta</span>
+              <span class="font-semibold ${isCorrect ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300'}">${userText}</span>
+            </div>
+            <div class="rounded-xl p-2.5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/70 dark:border-slate-800">
+              <span class="block text-[11px] font-bold uppercase text-slate-400">Respuesta correcta</span>
+              <span class="font-semibold text-emerald-700 dark:text-emerald-300">${correctText}</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">
+            <strong class="text-slate-800 dark:text-slate-200">Explicación:</strong> ${q.explanation}
+          </p>
+        `;
+        el.reviewList.appendChild(card);
+      });
+    }
+
+    // =========================================================
+    // MAPA DE PREGUNTAS
+    // =========================================================
+    function openMapModal() {
+      el.mapGrid.innerHTML = '';
+      state.activeQuestions.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        const ans = state.answers[q.id];
+        const isCurrent = idx === state.currentIndex;
+        const isFlagged = state.flagged.has(q.id);
+
+        let cls = 'h-11 rounded-xl font-bold text-sm transition-all flex items-center justify-center relative ';
+        if (isCurrent) {
+          cls += 'bg-indigo-600 text-white shadow-md shadow-indigo-500/30';
+        } else if (ans !== undefined) {
+          if (state.mode === 'practice') {
+            cls += ans === q.correct
+              ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40'
+              : 'bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-500/40';
+          } else {
+            cls += 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40';
+          }
+        } else {
+          cls += 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700';
+        }
+
+        if (isFlagged) {
+          cls += ' ring-2 ring-amber-500';
+        }
+
+        btn.className = cls;
+        btn.textContent = idx + 1;
+        btn.addEventListener('click', () => {
+          state.currentIndex = idx;
+          renderQuestion();
+          el.modalMap.classList.add('hidden');
+        });
+        el.mapGrid.appendChild(btn);
+      });
+
+      el.modalMap.classList.remove('hidden');
+    }
+
+    // =========================================================
+    // COPIAR RESUMEN AL PORTAPAPELES (CON DOCUMENT.EXECCOMMAND)
+    // =========================================================
+    function copyResultsSummary() {
+      try {
+        const total = state.activeQuestions.length;
+        const correct = state.activeQuestions.filter(q => state.answers[q.id] === q.correct).length;
+        const pct = Math.round((correct / total) * 100);
+        const nameLine = state.studentName ? `Estudiante: ${state.studentName}\n` : '';
+        const text = `Resultados — Examen Interactivo Cultura Digital I\n${nameLine}Calificación: ${pct}% (${correct}/${total} aciertos)\nTiempo: ${formatTime(state.elapsedSeconds)}\nModalidad: ${state.mode === 'practice' ? 'Práctica Guiada' : 'Simulacro Real'}`;
+
+        const tempArea = document.createElement('textarea');
+        tempArea.value = text;
+        tempArea.style.position = 'fixed';
+        tempArea.style.opacity = '0';
+        document.body.appendChild(tempArea);
+        tempArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempArea);
+        showToast('Resumen copiado al portapapeles');
+      } catch (err) {
+        showToast('No se pudo copiar el resumen');
+      }
+    }
+
+    // =========================================================
+    // EVENTOS E INICIALIZACIÓN
+    // =========================================================
+    // Selector de modalidad en inicio
+    el.modeCards.forEach(card => {
+      card.addEventListener('click', () => {
+        state.mode = card.dataset.mode;
+        el.modeCards.forEach(c => {
+          const isSelected = c.dataset.mode === state.mode;
+          const check = c.querySelector('.mode-check');
+          if (isSelected) {
+            c.className = 'mode-card text-left p-4 rounded-2xl border-2 border-indigo-500 bg-indigo-500/10 transition-all duration-200 focus:outline-none';
+            check.className = 'w-5 h-5 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xs mode-check';
+          } else {
+            c.className = 'mode-card text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-100/50 dark:bg-slate-800/50 hover:border-indigo-400 transition-all duration-200 focus:outline-none';
+            check.className = 'w-5 h-5 rounded-full border-2 border-slate-300 dark:border-slate-600 text-transparent flex items-center justify-center text-xs mode-check';
+          }
+        });
+      });
+    });
+
+    // Tema claro / oscuro
+    el.btnTheme.addEventListener('click', () => {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.toggle('dark');
+      el.iconSun.classList.toggle('hidden', !isDark);
+      el.iconMoon.classList.toggle('hidden', isDark);
+    });
+
+    // Activar / silenciar sonido
+    el.btnSound.addEventListener('click', () => {
+      state.soundEnabled = !state.soundEnabled;
+      el.iconSoundOn.classList.toggle('hidden', !state.soundEnabled);
+      el.iconSoundOff.classList.toggle('hidden', state.soundEnabled);
+      showToast(state.soundEnabled ? 'Sonidos activados' : 'Sonidos silenciados');
+    });
+
+    // Botón volver a inicio
+    el.btnHome.addEventListener('click', () => {
+      if (!el.screenQuiz.classList.contains('hidden')) {
+        showConfirmModal(
+          '¿Salir del examen actual?',
+          'Si regresas al inicio perderás el progreso de la sesión en curso.',
+          'Sí, volver al inicio',
+          () => switchScreen('start')
+        );
+      } else {
+        switchScreen('start');
+      }
+    });
+
+    // Comenzar examen
+    el.btnStartExam.addEventListener('click', () => startSession());
+
+    // Navegación del examen
+    el.btnPrev.addEventListener('click', () => {
+      if (state.currentIndex > 0) {
+        state.currentIndex -= 1;
+        renderQuestion();
+      }
+    });
+
+    el.btnNext.addEventListener('click', () => {
+      if (state.currentIndex < state.activeQuestions.length - 1) {
+        state.currentIndex += 1;
+        renderQuestion();
+      } else {
+        attemptFinishExam();
+      }
+    });
+
+    el.btnFinishEarly.addEventListener('click', () => attemptFinishExam());
+
+    // Marcar pregunta con bandera
+    el.btnFlag.addEventListener('click', () => {
+      const q = state.activeQuestions[state.currentIndex];
+      if (!q) return;
+      if (state.flagged.has(q.id)) {
+        state.flagged.delete(q.id);
+        showToast('Marca eliminada');
+      } else {
+        state.flagged.add(q.id);
+        showToast('Pregunta marcada para revisar');
+      }
+      renderQuestion();
+    });
+
+    // Modales
+    el.btnOpenMap.addEventListener('click', openMapModal);
+    el.btnCloseMap.addEventListener('click', () => el.modalMap.classList.add('hidden'));
+    el.modalMap.addEventListener('click', (e) => {
+      if (e.target === el.modalMap) el.modalMap.classList.add('hidden');
+    });
+
+    el.btnConfirmCancel.addEventListener('click', closeConfirmModal);
+    el.btnConfirmOk.addEventListener('click', () => {
+      const cb = state.confirmCallback;
+      closeConfirmModal();
+      if (typeof cb === 'function') cb();
+    });
+
+    // Filtros y acciones en resultados
+    el.reviewFilters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.reviewFilter = btn.dataset.filter;
+        updateReviewFilterButtons();
+        renderReviewList();
+      });
+    });
+
+    el.btnCopySummary.addEventListener('click', copyResultsSummary);
+    el.btnRestart.addEventListener('click', () => switchScreen('start'));
+
+    // Atajos de teclado durante el examen
+    document.addEventListener('keydown', (e) => {
+      if (el.screenQuiz.classList.contains('hidden')) return;
+      if (!el.modalMap.classList.contains('hidden') || !el.modalConfirm.classList.contains('hidden')) {
+        if (e.key === 'Escape') {
+          el.modalMap.classList.add('hidden');
+          closeConfirmModal();
+        }
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+      if (key === 'a' || key === '1') handleSelectOption(0);
+      else if (key === 'b' || key === '2') handleSelectOption(1);
+      else if (key === 'c' || key === '3') handleSelectOption(2);
+      else if (key === 'd' || key === '4') handleSelectOption(3);
+      else if (e.key === 'ArrowRight' || e.key === 'Enter') el.btnNext.click();
+      else if (e.key === 'ArrowLeft') el.btnPrev.click();
+    });
+  </script>
+</body>
+</html>
